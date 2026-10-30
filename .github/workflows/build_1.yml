@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install platformio
-      - run: pio pkg install -g -p https://github.com/${{ github.repository }}
+      - run: sed -i "s|^platform *=.*|platform = https://github.com/${{ github.repository }}|" platformio.ini
       - run: pio run
       - uses: actions/upload-artifact@v4
         with:
