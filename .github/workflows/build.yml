@@ -1,1 +1,17 @@
-
+name: Build firmware
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install platformio
+      - run: pio pkg install -g -p https://github.com/${{ github.repository }}
+      - run: pio run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: k6-firmware
+          path: out/
